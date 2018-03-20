@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Customer.Web.Data.Entities;
 using Customer.Web.Data.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Customer.Web.Controllers
 {
@@ -13,19 +15,20 @@ namespace Customer.Web.Controllers
         {
             _repo = repo;
         }
+
         public IActionResult Index()
         {
             return View();
         }
 
         [HttpGet]
-        public async Task<IEnumerable<Data.Entities.Customer>> GetCustomers()
+        public async Task<IEnumerable<CustomerDto>> GetCustomers()
         {
-            return await _repo.GetCustomers();           
+            return await _repo.GetCustomers();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody]Data.Entities.Customer customer)
+        public async Task<IActionResult> Post([FromForm]CustomerDto customer)
         {
             var created = await _repo.CreateCustomer(customer);
             if (created)
@@ -36,7 +39,7 @@ namespace Customer.Web.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Update(Data.Entities.Customer customer)
+        public async Task<IActionResult> Update(CustomerDto customer)
         {
             var updated = await _repo.UpdateCustomer(customer);
             if (updated)
@@ -48,7 +51,7 @@ namespace Customer.Web.Controllers
         }
 
         [HttpDelete]
-        public async Task<IActionResult> Delete(Data.Entities.Customer customer)
+        public async Task<IActionResult> Delete(CustomerDto customer)
         {
             var deleted = await _repo.DeleteCustomer(customer);
             if (deleted)

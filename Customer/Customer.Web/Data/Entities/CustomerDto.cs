@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Customer.Web.Data.Entities
 {
-    public class Customer
+    public class CustomerDto
     {
         public int Id { get; set; }
         public string FirstName { get; set; }

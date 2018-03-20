@@ -2,10 +2,28 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TypeScriptToolsVersion>2.6</TypeScriptToolsVersion>
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Services\**" />
+    <Content Remove="Services\**" />
+    <EmbeddedResource Remove="Services\**" />
+    <None Remove="Services\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="wwwroot\ts\main.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="ClientApp\app\customer-create-component.ts" />
+    <None Remove="ClientApp\app\services\customer-service.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.5" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.2" />
   </ItemGroup>
 
   <ItemGroup>
@@ -14,7 +32,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Services\" />
+    <TypeScriptCompile Include="ClientApp\app\customer\customer-create-component.ts" />
+    <TypeScriptCompile Include="ClientApp\app\services\customer-service.ts" />
+    <TypeScriptCompile Include="wwwroot\ts\main.ts" />
   </ItemGroup>
 
 </Project>

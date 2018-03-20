@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Customer.Web.Data.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace Customer.Web.Data
 {
@@ -8,6 +9,6 @@ namespace Customer.Web.Data
         {
             
         }
-        public DbSet<Entities.Customer> Customers { get;set; }
+        public DbSet<CustomerDto> Customers { get;set; }
     }
 }

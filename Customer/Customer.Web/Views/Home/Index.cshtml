@@ -1,38 +1,26 @@
-﻿@model Customer.Web.Data.Entities.Customer
+﻿@model IEnumerable<Customer.Web.Data.Entities.CustomerDto>
 
 @{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="row">
-    <div class="col-md-6 col-md-offset-3">
-        <div class="well">
-            <form method="post">
-                <div class="form-group">
-                    <label asp-for="FirstName">First Name:</label>
-                    <input asp-for="FirstName" class="form-control"/>
-                    <span asp-validation-for="FirstName" class="text-warning"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="LastName">Last Name:</label>
-                    <input asp-for="LastName" class="form-control"/>
-                    <span asp-validation-for="LastName" class="text-warning"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Email">Email:</label>
-                    <input asp-for="Email" class="form-control"/>
-                    <span asp-validation-for="Email" class="text-warning"></span>
-                </div>
-                <div class="form-group">
-                    <input type="submit" class="btn btn-primary"/>
-                </div>
-            </form>
-        </div>
+    <div class="col-md-12">
+        <ul class="list-unstyled row">
+            @foreach (var customer in Model)
+            {
+                <li>
+                    <div class="col-xs-3">@customer.FirstName</div>
+                    <div class="col-xs-3">@customer.LastName</div>
+                    <div class="col-xs-3">@customer.Email</div>
+                    <div class="col-xs-3">
+                        <a asp-action="Update" asp-route-id="Id">Update</a>
+                        <a asp-action="Delete" asp="">Delete</a>
+                    </div>
+                </li>
+            }
+        </ul>
     </div>
 </div>
 
-<div class="row">
-    <div class="col-md-12">
-        
-    </div>
-</div>
+
