@@ -1,0 +1,11 @@
+﻿<ul class="list-unstyled row">
+    <li *ngFor="let c of customers">
+        <div class="col-xs-3">{{c.FirstName}}</div>
+        <div class="col-xs-3">{{c.LastName}}</div>
+        <div class="col-xs-3">{{c.Email}}</div>
+        <div class="col-xs-3">
+            <a (click)="updateCustomer(c)">Update</a>
+            <a (click)="deleteCustomer(c)">Delete</a>
+        </div>
+    </li>
+</ul>

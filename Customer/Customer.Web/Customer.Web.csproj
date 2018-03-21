@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <None Remove="ClientApp\app\customer-create-component.ts" />
+    <None Remove="ClientApp\app\interfaces\customer.ts" />
     <None Remove="ClientApp\app\services\customer-service.ts" />
   </ItemGroup>
 
@@ -33,6 +34,8 @@
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\app\customer\customer-create-component.ts" />
+    <TypeScriptCompile Include="ClientApp\app\customer\customer-list-component.ts" />
+    <TypeScriptCompile Include="ClientApp\app\interfaces\customer.ts" />
     <TypeScriptCompile Include="ClientApp\app\services\customer-service.ts" />
     <TypeScriptCompile Include="wwwroot\ts\main.ts" />
   </ItemGroup>
