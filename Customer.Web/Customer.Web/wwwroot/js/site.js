@@ -1,34 +1,39 @@
-﻿// Write your JavaScript code.
-
-$("#grid").DataTable({
-    "serverSide": true,
-    "filter": true,
-    "orderMulti": false,
-    "ajax": {
-        "url": "Home/GetCustomers",
-        "type": "POST",
-        "contentType": "application/json",
-        "dataType": "json"
-    },
-    "columndefs": [{
-        "targets": [0],
-        "visible": false,
-        "searchable": false
-    }],
-    "columns": [
-        { "data": "Id", "name": "Id", "autoWidth": true },
-        { "data": "FirstName", "name": "FirstName", "autoWidth": true },
-        { "data": "LastName", "name": "LastName", "autoWidth": true },
-        { "data": "Email", "name": "Email", "autoWidth": true },
-        { "render": function(data, type, row) {
-            return '<a class="btn btn-primary" onclick="UpdateRecord(' + row + ')">Update</a>';
-        }
+﻿$(window).load(function() {
+    $("#grid").dataTable({
+        "processing": false,
+        "serverSide": true,
+        "filter": false,
+        "orderMulti": false,
+        "ajax": {
+            "url": "Home/GetCustomers",
+            "type": "POST"
         },
-        { "render": function(data, type, row) {
-            return '<a class="btn btn-danger" onclick=DeleteRecord(' + row + ')">Delete</a>';
-        }}
+        "columndefs": [{
+            "targets": [0],
+            "visible": false,
+            "searchable": false
+        }],
+        "columns": [
+            { "data": "id", "autoWidth": true },
+            { "data": "firstName", "autoWidth": true },
+            { "data": "lastName", "autoWidth": true },
+            { "data": "email", "autoWidth": true },
+            {
+                "render": function (data, type, row) {
+                    return "<a class='btn btn-primary' onclick=UpdateRecord('" + row + "');>Update</a>";
+                }
+            },
+            {
+                "render": function (data, type, row) {
+                    return "<a class='btn btn-danger' onclick=DeleteRecord('" + row.id + "');>Delete</a>";
+                }
+            }
         ]
+    });
+
+    $('#grid').DataTable();
 });
+
 
 $("#submitCustomer").click(function () {
     var dataType = 'application/x-www-form-urlencoded; charset-utf-8';
@@ -41,31 +46,41 @@ $("#submitCustomer").click(function () {
         data: data
     });
 
-    ReloadCustomerComponent();
+    ReloadTableComponent();
 });
 
-function DeleteRecord(customer) {
+function DeleteRecord(row) {
+
+    var customer = {Id: row}
+
     $.ajax({
         type: 'DELETE',
         url: 'Home/Delete',
         data: customer
     });
 
-    ReloadCustomerComponent();
+    ReloadTableComponent();
 }
 
-function UpdateRecord(customer) {
+function UpdateRecord(row) {
+
+    var customer = Object.values(row);
+    console.log(customer);
+
     $.ajax({
         type: 'PUT',
         url: 'Home/Put',
         data: customer
     });
 
-    ReloadCustomerComponent();
+    ReloadTableComponent();
 }
 
-function ReloadCustomerComponent() {
-    $.get({
-        url: 'Home/CustomerListViewComponent'
-    });
+function ReloadTableComponent() {
+    $('#grid').DataTable().ajax.reload();
+}
+
+function serializeCustomer(customer) {
+    var customerObj = { Id: customer.id, FirstName: customer.fistName, LastName: customer.lastName, Email: customer.email }
+    return customerObj;
 }

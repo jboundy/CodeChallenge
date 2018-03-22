@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 using Customer.Web.Data.Entities;
 using Customer.Web.Data.Interfaces;
@@ -29,9 +30,14 @@ namespace Customer.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<JsonResult> GetCustomers()
+        public async Task<IActionResult> GetCustomers()
         {
-            return new JsonResult(await _repo.GetCustomers());
+
+            var draw = HttpContext.Request.Form["draw"].FirstOrDefault();
+            var data = await _repo.GetCustomers();
+            //draw = draw, recordsFiltered = data.Count(), recordsTotal = data.Count(),
+            return Json(new {sEcho = 1, iTotalRecords = data.Count(),
+                iTotalDisplayRecords = data.Count(), aaData = data});
         }
 
         [HttpPut]
