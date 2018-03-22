@@ -6,9 +6,9 @@ namespace Customer.Web.Data.Interfaces
 {
     public interface ICustomerRepository
     {
-        Task<bool> CreateCustomer(CustomerDto customer);
-        Task<IEnumerable<CustomerDto>> GetCustomers();
-        Task<bool> UpdateCustomer(CustomerDto customer);
-        Task<bool> DeleteCustomer(CustomerDto customer);
+        Task<bool> CreateCustomerAsync(CustomerDto customer);
+        Task<IEnumerable<CustomerDto>> GetCustomersAsync();
+        Task<bool> UpdateCustomerAsync(CustomerDto customer);
+        Task<bool> DeleteCustomerAsync(CustomerDto customer);
     }
 }

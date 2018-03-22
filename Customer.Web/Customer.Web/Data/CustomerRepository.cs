@@ -16,24 +16,29 @@ namespace Customer.Web.Data
         {
             _ctx = ctx;
         }
-        public async Task<bool> CreateCustomer(CustomerDto customer)
+        public async Task<bool> CreateCustomerAsync(CustomerDto customer)
         {
             await _ctx.AddAsync(customer);
             return await SaveAllAsync();
         }
 
-        public async Task<IEnumerable<CustomerDto>> GetCustomers()
+        public async Task<IEnumerable<CustomerDto>> GetCustomersAsync()
         {
             return await _ctx.Customers.ToListAsync();
         }
 
-        public async Task<bool> UpdateCustomer(CustomerDto customer)
+        public async Task<CustomerDto> GetCustomerByIdAsync(int id)
+        {
+            return await _ctx.Customers.FirstOrDefaultAsync(dto => dto.Id == id);
+        }
+
+        public async Task<bool> UpdateCustomerAsync(CustomerDto customer)
         {
             _ctx.Update(customer);
             return await SaveAllAsync();
         }
 
-        public async Task<bool> DeleteCustomer(CustomerDto customer)
+        public async Task<bool> DeleteCustomerAsync(CustomerDto customer)
         {
             _ctx.Remove(customer);
             return await SaveAllAsync();

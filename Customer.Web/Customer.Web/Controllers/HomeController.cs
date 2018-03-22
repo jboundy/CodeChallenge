@@ -24,28 +24,28 @@ namespace Customer.Web.Controllers
         public async Task<IActionResult> Post([FromForm] CustomerDto customer)
         {
             if (!ModelState.IsValid) return BadRequest();
-            await _repo.CreateCustomer(customer);
+            await _repo.CreateCustomerAsync(customer);
             return Ok();
         }
 
         [HttpGet]
         public async Task<IActionResult> GetCustomers()
         {
-            return new JsonResult(await _repo.GetCustomers());
+            return new JsonResult(await _repo.GetCustomersAsync());
         }
 
         [HttpPut]
         public async Task<IActionResult> Update(CustomerDto customer)
         {
             if (!ModelState.IsValid) return BadRequest();
-            await _repo.UpdateCustomer(customer);
+            await _repo.UpdateCustomerAsync(customer);
             return Ok();
         }
 
         [HttpDelete]
         public async Task<IActionResult> Delete(CustomerDto customer)
         {
-            var deleted = await _repo.DeleteCustomer(customer);
+            var deleted = await _repo.DeleteCustomerAsync(customer);
             return StatusCode(deleted);
         }
 

@@ -13,7 +13,7 @@ namespace Customer.Web.Components
         }
         public IViewComponentResult Invoke()
         {
-            return View("CustomerListVC", _repo.GetCustomers());
+            return View("CustomerListVC", _repo.GetCustomersAsync());
         }
     }
 }
