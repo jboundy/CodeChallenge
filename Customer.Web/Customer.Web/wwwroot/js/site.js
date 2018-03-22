@@ -1,71 +1,86 @@
-﻿// Write your JavaScript code.
+﻿var grid, dialog;
 
-$("#grid").DataTable({
-    "serverSide": true,
-    "filter": true,
-    "orderMulti": false,
-    "ajax": {
-        "url": "Home/GetCustomers",
-        "type": "POST",
-        "contentType": "application/json",
-        "dataType": "json"
-    },
-    "columndefs": [{
-        "targets": [0],
-        "visible": false,
-        "searchable": false
-    }],
-    "columns": [
-        { "data": "Id", "name": "Id", "autoWidth": true },
-        { "data": "FirstName", "name": "FirstName", "autoWidth": true },
-        { "data": "LastName", "name": "LastName", "autoWidth": true },
-        { "data": "Email", "name": "Email", "autoWidth": true },
-        { "render": function(data, type, row) {
-            return '<a class="btn btn-primary" onclick="UpdateRecord(' + row + ')">Update</a>';
-        }
+function Edit(e) {
+    $('#Id').val(e.data.id);
+    $('#FirstName').val(e.data.record.FirstName);
+    $('#LastName').val(e.data.record.LastName);
+    $('#Email').val(e.data.record.Email);
+    dialog.open('Edit Customer');
+}
+
+function Delete(e) {
+    if (confirm('Are you sure?')) {
+        $.ajax({ url: 'Home/Delete', data: { id: e.data.id }, method: 'DELETE' })
+            .done(function () {
+                grid.reload();
+            })
+            .fail(function () {
+                alert('Failed to delete.');
+            });
+    }
+}
+
+grid = $('#grid').grid({
+    primaryKey: 'id',
+    dataSource: 'Home/GetCustomers',
+    columns: [
+        { field: 'id', title: 'Customer Id' },
+        { field: 'firstName', title: 'First Name' },
+        { field: 'lastName', title: 'Last Name' },
+        { field: 'email', title: 'Email' },
+        {
+            width: 64,
+            tmpl: '<span class="material-icons gj-cursor-pointer">edit</span>',
+            align: 'center',
+            events: { 'click': Edit }
         },
-        { "render": function(data, type, row) {
-            return '<a class="btn btn-danger" onclick=DeleteRecord(' + row + ')">Delete</a>';
-        }}
-        ]
+        {
+            width: 64,
+            tmpl: '<span class="material-icons gj-cursor-pointer">delete</span>',
+            align: 'center',
+            events: { 'click': Delete }
+        }
+    ]
+});
+
+dialog = $('#dialog').dialog({
+    autoOpen: false,
+    resizable: false,
+    modal: true,
+    width: 360
+});
+
+$('#btnUpdate').on('click', function (e) {
+    console.log(e.data);
+    var record = {
+        Id: $('#Id').val(),
+        FirstName: $('#dialog').find('#FirstName').val(),
+        LastName: $('#dialog').find('#LastName').val(),
+        Email: $('#dialog').find('#Email').val()
+    };
+
+    console.log(record);
+    $.ajax({ url: 'Home/Update', data: record, method: 'PUT' })
+        .done(function () {
+            dialog.close();
+            grid.reload();
+        })
+        .fail(function () {
+            alert('Failed to save.');
+            dialog.close();
+        });
+});
+
+$('#btnCancel').on('click', function () {
+    dialog.close();
 });
 
 $("#submitCustomer").click(function () {
     var dataType = 'application/x-www-form-urlencoded; charset-utf-8';
     var data = $('form').serialize();
 
-    $.ajax({
-        type: 'POST',
-        url: 'Home/Post',
-        contentType: dataType,
-        data: data
-    });
-
-    ReloadCustomerComponent();
+    $.ajax({ url: 'Home/Post', data: data, contentType: dataType, type: 'POST' })
+        .done(function () {
+            grid.reload();
+        });
 });
-
-function DeleteRecord(customer) {
-    $.ajax({
-        type: 'DELETE',
-        url: 'Home/Delete',
-        data: customer
-    });
-
-    ReloadCustomerComponent();
-}
-
-function UpdateRecord(customer) {
-    $.ajax({
-        type: 'PUT',
-        url: 'Home/Put',
-        data: customer
-    });
-
-    ReloadCustomerComponent();
-}
-
-function ReloadCustomerComponent() {
-    $.get({
-        url: 'Home/CustomerListViewComponent'
-    });
-}
