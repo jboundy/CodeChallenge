@@ -1,1 +1,0 @@
-{"version":3,"file":"customer-create-component.js","sourceRoot":"","sources":["../../../../../../ClientApp/app/customer/customer-create-component.ts"],"names":[],"mappings":";;;;;;;;AAAA,sCAA0C;AAO1C;IAAA;IAIA,CAAC;IAJY,uBAAuB;QALnC,gBAAS,CAAC;YACP,QAAQ,EAAE,iBAAiB;YAC3B,WAAW,EAAE,gCAAgC;YAC7C,MAAM,EAAE,EAAE;SACb,CAAC;OACW,uBAAuB,CAInC;IAAD,8BAAC;CAAA,AAJD,IAIC;AAJY,0DAAuB"}
