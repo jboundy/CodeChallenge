@@ -11,7 +11,7 @@ This Readme contains some information about the project and instructions on setu
 
 ### Instructions ###
 
-In order to to setup the database and tables you will need to do the following:
+In order to to setup the database and table you will need to do the following:
 
 - Use the command prompt and navigate to the folder below the solution folder
 - Run the following commands
@@ -21,8 +21,9 @@ In order to to setup the database and tables you will need to do the following:
 ### Improvements ###
 - More tests involving the interaction with the database
 	- The api is basic/small but could be more refined
-- Use a framework for building view component like angular cli or react
+- Use a framework for building view components like angular cli or react
 - Building a UI that supported multiple edits in the grid
 - Use one form to interact with the data
 - Better validation on the form
  - There isn't much right now
+- The first record inserted into the table from the form does not show in the grid until the page is refreshed. After refresh this issue is resolved. 
