@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
+﻿using System.Diagnostics;
 using System.Threading.Tasks;
 using Customer.Web.Data.Entities;
 using Customer.Web.Data.Interfaces;
@@ -25,26 +23,23 @@ namespace Customer.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromForm] CustomerDto customer)
         {
-            var created = await _repo.CreateCustomer(customer);
-            return StatusCode(created);
+            if (!ModelState.IsValid) return BadRequest();
+            await _repo.CreateCustomer(customer);
+            return Ok();
         }
 
-        [HttpPost]
+        [HttpGet]
         public async Task<IActionResult> GetCustomers()
         {
-
-            var draw = HttpContext.Request.Form["draw"].FirstOrDefault();
-            var data = await _repo.GetCustomers();
-            //draw = draw, recordsFiltered = data.Count(), recordsTotal = data.Count(),
-            return Json(new {sEcho = 1, iTotalRecords = data.Count(),
-                iTotalDisplayRecords = data.Count(), aaData = data});
+            return new JsonResult(await _repo.GetCustomers());
         }
 
         [HttpPut]
         public async Task<IActionResult> Update(CustomerDto customer)
         {
-            var updated = await _repo.UpdateCustomer(customer);
-            return StatusCode(updated);
+            if (!ModelState.IsValid) return BadRequest();
+            await _repo.UpdateCustomer(customer);
+            return Ok();
         }
 
         [HttpDelete]
