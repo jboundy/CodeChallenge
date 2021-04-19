@@ -25,5 +25,5 @@ In order to to setup the database and table you will need to do the following:
 - Building a UI that supported multiple edits in the grid
 - Use one form to interact with the data
 - Better validation on the form
- - There isn't much right now
+ -  There isn't much right now
 - The first record inserted into the table from the form does not show in the grid until the page is refreshed. After refresh this issue is resolved. 
